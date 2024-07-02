@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import font, simpledialog, messagebox
 import mysql.connector
-from styles import *  # Asumiendo que tienes un archivo styles.py con definiciones de estilo
-import subprocess  # Para ejecutar otro script de Python
+from styles import * 
+
 
 # Función para gestionar cursos
 def gestionar_cursos(usuario):
@@ -56,19 +56,19 @@ def gestionar_cursos(usuario):
                 label_curso = tk.Label(frame_curso, text=f"{curso_id} - {curso_nombre}", font=titulo_font)
                 label_curso.pack(side=tk.LEFT, padx=10)
                 
-                boton_ver_notas = tk.Button(
-                    frame_curso, 
-                    text="Ver Notas", 
-                    font=boton_font, 
-                    command=lambda id=curso_id: abrir_otro_script(id),
-                    bg="#4CAF50",  # Color de fondo del botón
-                    fg="white",  # Color del texto del botón
-                    relief="raised",  # Relieve del botón
-                    bd=3,  # Borde del botón
-                    padx=10,  # Espaciado horizontal interno
-                    pady=5  # Espaciado vertical interno
-                )
-                boton_ver_notas.pack(side=tk.RIGHT, padx=10)
+                #boton_ver_notas = tk.Button(
+                    #frame_curso, 
+                    #text="Ver Notas", 
+                    #font=boton_font, 
+                    #command=lambda id=curso_id: abrir_otro_script(id),
+                   # bg="#4CAF50",  # Color de fondo del botón
+                    #fg="white",  # Color del texto del botón
+                   # relief="raised",  # Relieve del botón
+                   # bd=3,  # Borde del botón
+                   # padx=10,  # Espaciado horizontal interno
+                   # pady=5  # Espaciado vertical interno
+               # )
+                #boton_ver_notas.pack(side=tk.RIGHT, padx=10)
                 
             connection.close()
         except mysql.connector.Error as err:
@@ -159,12 +159,10 @@ def gestionar_cursos(usuario):
                 except mysql.connector.Error as err:
                     print(f"Error: {err}")
     
-    # Función para abrir otro script de Python
-    def abrir_otro_script(curso_id):
-        # Aquí debes reemplazar "otro_script.py" por el nombre de tu script de Python
-        subprocess.Popen(["python", "calificarnotas.py", str(curso_id)])
+   
     
-    # Botones para agregar, editar y eliminar cursos
+    
+ 
     #boton_agregar = tk.Button(
        # ventana_cursos, 
         #text="Agregar Curso", 
@@ -198,29 +196,28 @@ def gestionar_cursos(usuario):
         text="Eliminar Curso", 
         font=boton_font, 
         command=eliminar_curso,
-        bg="#F44336",  # Color de fondo del botón
-        fg="white",  # Color del texto del botón
-        relief="raised",  # Relieve del botón
-        bd=3,  # Borde del botón
-        padx=10,  # Espaciado horizontal interno
-        pady=5  # Espaciado vertical interno
+        bg="#F44336",  
+        fg="white", 
+        relief="raised",  
+        bd=3, 
+        padx=10, 
+        pady=5 
     )
     boton_eliminar.pack(side=tk.LEFT, padx=10, pady=20)
     
-    # Botón para salir de la ventana
+   
     boton_salir = tk.Button(
         ventana_cursos, 
         text="Salir", 
         font=boton_font, 
         command=ventana_cursos.destroy,
-        bg="#9E9E9E",  # Color de fondo del botón
-        fg="white",  # Color del texto del botón
-        relief="raised",  # Relieve del botón
-        bd=3,  # Borde del botón
-        padx=10,  # Espaciado horizontal interno
-        pady=5  # Espaciado vertical interno
+        bg="#9E9E9E",  
+        fg="white",  
+        relief="raised",  
+        bd=3,  
+        padx=10,
+        pady=5  
     )
     boton_salir.pack(side=tk.RIGHT, padx=10, pady=20)
-# Función para ajustar el tamaño del canvas
 
-# Aquí iría el resto de tu código, como inicializar tu aplicación principal de tkinter, etc.
+

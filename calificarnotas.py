@@ -3,12 +3,12 @@ from tkinter import messagebox
 import mysql.connector
 from mysql.connector import errorcode
 
-# Configuración de la conexión a la base de datos
+
 try:
     connection = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="",  # Coloca tu contraseña aquí si la tienes
+        password="",  
         database="estudiantespy"
     )
 except mysql.connector.Error as err:
@@ -19,7 +19,7 @@ except mysql.connector.Error as err:
     else:
         print(f"Error: {err}")
 
-# Función para listar las calificaciones por DNI
+# Función  las calificaciones por DNI
 def listar_calificaciones(dni_estudiante, id_curso, entry_fields, promedio_entries, promedio_total_label):
     try:
         cursor = connection.cursor()
@@ -46,7 +46,7 @@ def listar_calificaciones(dni_estudiante, id_curso, entry_fields, promedio_entri
                 promedio_entry.insert(0, result[-5 + i])  # Insertar los promedios 1 a 4 y el promedio total
                 promedio_entry.config(state="readonly")
 
-            # Mostrar el promedio total en el label correspondiente
+            # funcionamiento para mostrar el promedio total (aclaracion del label correspondiente)
             promedio_total_label.config(text=f"Promedio Total: {result[-1]:.2f}")
         else:
             messagebox.showinfo("Información", "No se encontraron calificaciones para el DNI y curso especificados.")
@@ -55,7 +55,7 @@ def listar_calificaciones(dni_estudiante, id_curso, entry_fields, promedio_entri
     finally:
         cursor.close()
 
-# Función para actualizar las calificaciones
+# Función para actualizar los datos de la tabla
 def actualizar_calificaciones(dni_estudiante, id_curso, entry_fields, promedio_entries, promedio_total_label):
     try:
         cursor = connection.cursor()
@@ -72,11 +72,11 @@ def actualizar_calificaciones(dni_estudiante, id_curso, entry_fields, promedio_e
             "AND id_curso = %s"
         )
         
-        # Calcular los promedios y el promedio total
+        # Calculo de  los promedios y el promedio total del estudiante
         promedios = calcular_promedios(entry_fields)
         promedio_total = sum(promedios) / 4
 
-        # Parámetros para la actualización
+        # Parámetros para la actualización de datos del curso
         update_params = (
             entry_fields[0].get(), entry_fields[1].get(), entry_fields[2].get(), entry_fields[3].get(),
             entry_fields[4].get(), entry_fields[5].get(), entry_fields[6].get(), entry_fields[7].get(),
@@ -106,7 +106,7 @@ def actualizar_calificaciones(dni_estudiante, id_curso, entry_fields, promedio_e
         cursor.close()
 
 def calcular_promedios(entry_fields):
-    # Convertir las entradas a números y calcular los promedios
+    # Convertierte las entradas a números y calcular los promedios directamente
     promedios = []
     for i in range(4):
         calificaciones = [float(entry_fields[j].get()) for j in range(i, len(entry_fields), 4) if entry_fields[j].get()]
@@ -117,28 +117,28 @@ def calcular_promedios(entry_fields):
         promedios.append(promedio)
     return promedios
 
-# Configuración de la interfaz de Tkinter
+# Configuración de la interfaz 
 import tkinter as tk
 
 def main():
     root = tk.Tk()
     root.title("Gestión de Calificaciones de Estudiantes")
-    root.geometry("1050x1050")  # Set the window size
+    root.geometry("1050x1050") 
 
-    # Create a main frame with a nice background color
+    
     main_frame = tk.Frame(root, bg="#f0f0f0")
     main_frame.pack(fill="both", expand=True)
 
-    # Create a header frame with a title label
+    
     header_frame = tk.Frame(main_frame, bg="#333", height=50)
     header_frame.pack(fill="x")
     tk.Label(header_frame, text="Gestión de Calificaciones de Estudiantes", font=("Arial", 18, "bold"), fg="white", bg="#333").pack(pady=10)
 
-    # Create a form frame with input fields
+    
     form_frame = tk.Frame(main_frame, bg="#f0f0f0", padx=20, pady=20)
     form_frame.pack(fill="both", expand=True)
 
-    # Create input fields for DNI and ID Curso
+   
     tk.Label(form_frame, text="DNI Estudiante:", font=("Arial", 12)).grid(row=0, column=0, padx=10, pady=10, sticky=tk.E)
     dni_entry = tk.Entry(form_frame, font=("Arial", 12), width=20)
     dni_entry.grid(row=0, column=1, padx=10, pady=10, sticky=tk.W)
@@ -147,7 +147,7 @@ def main():
     id_curso_entry = tk.Entry(form_frame, font=("Arial", 12), width=20)
     id_curso_entry.grid(row=1, column=1, padx=10, pady=10, sticky=tk.W)
 
-    # Create input fields for each calificación
+   
     labels_texts = [
         "Calificación 1A", "Calificación 2A", "Calificación 3A", "Calificación 4A",
         "Calificación 1B", "Calificación 2B", "Calificación 3B", "Calificación 4B",
@@ -164,7 +164,7 @@ def main():
         entry.grid(row=row, column=col + 1, padx=5, pady=5, sticky=tk.W)
         entry_fields.append(entry)
 
-    # Create input fields for promedios
+
     promedio_labels = ["Promedio 1", "Promedio 2", "Promedio 3", "Promedio 4"]
     promedio_entries = []
 
@@ -177,12 +177,12 @@ def main():
         entry.config(state="readonly")
         promedio_entries.append(entry)
 
-    # Create label for promedio total
+    
     tk.Label(form_frame, font=("Arial", 12)).grid(row=7, column=0, padx=10, pady=10, sticky=tk.E)
     promedio_total_label = tk.Label(form_frame, text="", font=("Arial", 12))
     promedio_total_label.grid(row=7, column=1, padx=10, pady=10, sticky=tk.W)
 
-    # Create buttons with a nice design
+ 
     button_frame = tk.Frame(form_frame, bg="#f0f0f0")
     button_frame.grid(row=8, column=0, columnspan=2, pady=20)
 
@@ -191,21 +191,20 @@ def main():
     tk.Button(button_frame, text="Actualizar Calificaciones", font=("Arial", 12), bg="#2196F3", fg="white", command=lambda: actualizar_calificaciones(dni_entry.get(), id_curso_entry.get(), entry_fields, promedio_entries, promedio_total_label)).pack(side=tk.LEFT, padx=10)
 
 
-     # Botón para salir de la ventana
+    
     boton_salir = tk.Button(
-    button_frame,  # Parent widget is button_frame
+    button_frame, 
     text="Salir",
-    command=root.destroy,  # Close the root window
-    bg="#9E9E9E",  # Color de fondo del botón
-    fg="white",  # Color del texto del botón
-    relief="raised",  # Relieve del botón
-    bd=3,  # Borde del botón
-    padx=10,  # Espaciado horizontal interno
-    pady=5  # Espaciado vertical interno
+    command=root.destroy,  
+    bg="#9E9E9E", 
+    fg="white",  
+    relief="raised",  
+    bd=3,  
+    padx=10,  
+    pady=5  
 )
     boton_salir.pack(side=tk.RIGHT, padx=10, pady=20)
     root.mainloop()
 
-if __name__ == "__main__":
-    main()
-                                                                                                                                              
+def iniciar_interfaz():
+    main()                                                                                                                                  

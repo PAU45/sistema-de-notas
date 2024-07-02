@@ -5,15 +5,15 @@ import mysql.connector
 
 def obtener_calificaciones_estudiante(id_estudiante):
     try:
-        # Realizar la conexión a la base de datos
+        
         connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="",  # Aquí va la contraseña de tu base de datos
+            password="",  
             database="estudiantespy"
         )
 
-        # Crear un cursor para ejecutar consultas
+        #un cursor para ejecutar consultas
         cursor = connection.cursor()
 
         # Consulta para obtener las calificaciones del estudiante con el nombre del curso
@@ -42,9 +42,9 @@ def obtener_calificaciones_estudiante(id_estudiante):
         return None
 
 def generar_reporte(usuario):
-    ruta_guardado = "C:\\Users\\paulin\\Desktop\\notas\\carpeta\\notas"  # Ruta donde se guardará el PDF
+    ruta_guardado = "notas/carpeta/notas"
 
-    id_estudiante = usuario[0]  # Suponiendo que usuario es una tupla de datos del estudiante
+    id_estudiante = usuario[0]  
     nombre = usuario[2]
     apellido = usuario[3]
     grado = usuario[6]
@@ -121,10 +121,4 @@ def generar_reporte(usuario):
     else:
         print(f"No se encontraron calificaciones para el estudiante: {nombre} {apellido}")
 
-# Ejemplo de uso:
 
-# Suponiendo que usuario es una tupla con los datos del estudiante
-usuario = (8, 987654321, 'María', 'Gómez', '17', 2019, 'Secundaria', 'B')
-
-# Llama a generar_reporte con el usuario
-generar_reporte(usuario)

@@ -15,11 +15,9 @@ def editar_estudiante(estudiante):
     Spaces = font.Font(size=FontSpaces)
     boton_font = font.Font(family=FontSizeTitles, size=FontSizeBtn, weight=FontBold)
 
-    # Crear el título
     titulo_label = tk.Label(ventana_edicion, text="Editar Alumno", font=titulo_font)
     titulo_label.pack(pady=50)
 
-    # Crear los campos de texto y etiquetas para la ventana de edición
     label_nombre = tk.Label(ventana_edicion, text="Nombre:", font=Campos)
     label_nombre.pack()
     entry_nombre = tk.Entry(ventana_edicion, width=30, font=Campos)
@@ -62,10 +60,10 @@ def editar_estudiante(estudiante):
     edad = estudiante[4]
     dni = estudiante[1]
     año_de_ingreso = estudiante[5]
-    grado = estudiante[6]  # Suponiendo que el grado está en la posición 6 del estudiante
-    seccion = estudiante[7]  # Suponiendo que la sección está en la posición 7 del estudiante
+    grado = estudiante[6]  
+    seccion = estudiante[7]  
 
-    # Preencher los campos de entrada con la información actual del estudiante
+    # inserta la información actual del estudiante
     entry_nombre.insert(0, nombre)
     entry_apellido.insert(0, apellido)
     entry_edad.insert(0, edad)
@@ -74,9 +72,9 @@ def editar_estudiante(estudiante):
     entry_grado.insert(0, grado)
     entry_seccion.insert(0, seccion)
 
-    # Función para guardar los cambios realizados en la edición del estudiante
+    # Función para guardado de los cambios realizados en la edición del estudiante por el profesor
     def guardar_cambios():
-        # Obtener los nuevos valores ingresados en los campos de texto
+        # Obtener los nuevos valores ingresados en los campos de texto del sistema
         nuevo_nombre = entry_nombre.get()
         nuevo_apellido = entry_apellido.get()
         nueva_edad = entry_edad.get()
@@ -85,7 +83,7 @@ def editar_estudiante(estudiante):
         nuevo_grado = entry_grado.get()
         nueva_seccion = entry_seccion.get()
 
-        # Realizar la conexión a la base de datos
+   
         connection = mysql.connector.connect(
             host="localhost",
             user="root",
@@ -93,28 +91,27 @@ def editar_estudiante(estudiante):
             database="estudiantespy"
         )
 
-        # Crear un cursor para ejecutar consultas
+        
         cursor = connection.cursor()
 
-        # Ejecutar la consulta para actualizar la información del estudiante
+        # realizar la consulta de sql  para actualizar la información del estudiante
         consulta = "UPDATE estudiantes SET nombre=%s, apellido=%s, edad=%s, dni=%s, año_de_ingreso=%s, grado=%s, seccion=%s WHERE id_estudiante=%s"
         valores = (nuevo_nombre, nuevo_apellido, nueva_edad, nuevo_dni, nuevo_año_ingreso, nuevo_grado, nueva_seccion, id_estudiante)
         cursor.execute(consulta, valores)
 
-        # Confirmar los cambios en la base de datos
+        
         connection.commit()
 
-        # Cerrar el cursor y la conexión
+   
         cursor.close()
         connection.close()
 
-        # Cerrar la ventana de edición
+       
         ventana_edicion.destroy()
 
-    # Crear el botón de guardar cambios
+   
     Spacio = tk.Label(ventana_edicion, text=" ", font=Spaces)
     Spacio.pack()
     boton_guardar = tk.Button(ventana_edicion, text="Guardar Cambios", command=guardar_cambios, font=boton_font, bg=colorBtns, fg=colorFont)
     boton_guardar.pack(side=tk.TOP, padx=10, pady=10)
 
-# Ejemplo de uso: editar_estudiante([1, 12345678, "Juan", "Perez", 25, 2020, "Primero", "A"])

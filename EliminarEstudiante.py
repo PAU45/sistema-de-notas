@@ -1,11 +1,10 @@
 import mysql.connector
 
-# Función para eliminar un estudiante y sus calificaciones asociadas
+
 def eliminar_estudiante(estudiante):
-    # Obtén el ID del estudiante
+  
     id_estudiante = estudiante[0]
 
-    # Realiza la conexión a la base de datos
     connection = mysql.connector.connect(
         host="localhost",
         user="root",
@@ -46,6 +45,3 @@ def eliminar_estudiante(estudiante):
         cursor.close()
         connection.close()
 
-# Ejemplo de uso:
-# suponiendo que 'estudiante' es una tupla que contiene los datos del estudiante a eliminar
-# eliminar_estudiante(estudiante)
